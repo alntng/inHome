@@ -1,54 +1,22 @@
 [
-  {
-    "id": 1,
-    "name": "Jason Brown"
-  },
-  {
-    "id": 2,
-    "name": "Sarah Williams"
-  },
-  {
-    "id": 3,
-    "name": "Frank Smith"
-  },
-  {
-    "id": 4,
-    "name": "Anthony Jones"
-  },
-  {
-    "id": 5,
-    "name": "Hilda"
-  },
-  {
-    "id": 6,
-    "name": "Teressa"
-  },
-  {
-    "id": 7,
-    "name": "Teressa"
-  },
-  {
-    "id": 8,
-    "name": "Hilda"
-  },
-  {
-    "id": 9,
-    "name": "Hilda"
-  },
-  {
-    "id": 10,
-    "name": "Teressa"
-  },
-  {
-    "id": 11,
-    "name": "Brendan"
-  },
-  {
-    "id": 12,
-    "name": "Brendan"
-  },
-  {
-    "id": 13,
-    "name": "Brendan"
-  }
-]
+    {
+      "id": 1,
+      "name": "Jason Brown"
+    },
+    {
+      "id": 2,
+      "name": "Sarah Williams"
+    },
+    {
+      "id": 3,
+      "name": "Frank Smith"
+    },
+    {
+      "id": 4,
+      "name": "Anthony Jones"
+    },
+    {
+      "id": 5,
+      "name": "Maria Miller"
+    }
+  ]

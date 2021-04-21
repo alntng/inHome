@@ -71,7 +71,7 @@ const orderRoutes = (app, fs) => {
           (data) => {
             const { item_id, qty } = req.body;
             let newOrderLine = { order_id: orderId, item_id, qty };
-            console.log(newOrderLine);
+
             data.push(newOrderLine);
 
             writeFile(
@@ -89,6 +89,41 @@ const orderRoutes = (app, fs) => {
     } catch (err) {
       console.log(err);
     }
+  });
+
+  //MODIFY AN ORDER
+  app.put("/orders/:id", (req, res) => {
+    try {
+      readFile(
+        (data) => {
+          const { item_id, qty } = req.body;
+          let idx = 0;
+
+          data.forEach((orderLine, i) => {
+            if (
+              orderLine.order_id === Number(req.params.id) &&
+              orderLine.item_id === item_id
+            )
+              idx = i;
+          });
+
+          data[idx] = { ...data[idx], qty };
+          if (qty <= 0) {
+            data = [...data.slice(0, idx), ...data.slice(idx + 1)];
+          }
+
+          writeFile(
+            JSON.stringify(data, null, 2),
+            () => {
+              res.status(200).send(`Order ${req.params.id} updated`);
+            },
+            orderLinesPath
+          );
+        },
+        true,
+        orderLinesPath
+      );
+    } catch (err) {}
   });
 };
 
