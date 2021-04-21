@@ -45,7 +45,7 @@ const customerRoutes = (app, fs) => {
   app.post("/customers", (req, res) => {
     readFile((data) => {
       // add the new user
-      req.body.id = ++nextId;
+      req.body = { id: ++nextId, ...req.body };
       data.push(req.body);
 
       writeFile(JSON.stringify(data), () => {
@@ -55,18 +55,17 @@ const customerRoutes = (app, fs) => {
   });
 
   // UPDATE
-  app.put("/users/:id", (req, res) => {
+  app.put("/customers/:id", (req, res) => {
     readFile((data) => {
-      // add the new user
-      const userIdx = data.filter(
-        (customer) => customer.id === req.params["id"]
-      );
+      let userIdx = 0;
+      data.forEach((customer, i) => {
+        if (customer.id === Number(req.params.id)) userIdx = i;
+      });
 
       data[userIdx].name = req.body.name;
-      //   data[userId] = req.body;
 
       writeFile(JSON.stringify(data, null, 2), () => {
-        res.status(200).send(`users id:${userId} updated`);
+        res.status(200).send(`users id:${req.params.id} updated`);
       });
     }, true);
   });
