@@ -4,10 +4,7 @@ const customerRoutes = (app, fs) => {
   const dataPath = "./data/customers.json";
   const currentCustomers = require("../data/customers.json");
 
-  let nextId = 0;
-  currentCustomers.forEach((customer) => {
-    nextId = Math.max(customer.id, nextId);
-  });
+  let userId = Math.max(...currentCustomers.map((customer) => customer.id));
 
   const readFile = (callback, returnJson = false, filePath = dataPath) => {
     fs.readFile(filePath, (err, data) => {
@@ -46,10 +43,10 @@ const customerRoutes = (app, fs) => {
     try {
       readFile((data) => {
         // add the new user
-        req.body = { id: ++nextId, ...req.body };
+        req.body = { id: ++userId, ...req.body };
         data.push(req.body);
 
-        writeFile(JSON.stringify(data), () => {
+        writeFile(JSON.stringify(data, null, 2), () => {
           res.status(200).send("new user added");
         });
       }, true);
@@ -62,12 +59,12 @@ const customerRoutes = (app, fs) => {
   app.put("/customers/:id", (req, res) => {
     try {
       readFile((data) => {
-        let userIdx = 0;
+        let idx = 0;
         data.forEach((customer, i) => {
-          if (customer.id === Number(req.params.id)) userIdx = i;
+          if (customer.id === Number(req.params.id)) idx = i;
         });
 
-        data[userIdx].name = req.body.name;
+        data[idx].name = req.body.name;
 
         writeFile(JSON.stringify(data, null, 2), () => {
           res.status(200).send(`users id:${req.params.id} updated`);
