@@ -123,7 +123,46 @@ const orderRoutes = (app, fs) => {
         true,
         orderLinesPath
       );
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  //DELETE an item from an order
+  //seperate route in case the user had multiply qty and wanted to remove in one go
+  app.delete("/orders/:id", (req, res) => {
+    try {
+      readFile(
+        (data) => {
+          const { item_id, qty } = req.body;
+          let idx = 0;
+
+          data.forEach((orderLine, i) => {
+            if (
+              orderLine.order_id === Number(req.params.id) &&
+              orderLine.item_id === item_id
+            )
+              idx = i;
+          });
+
+          data = [...data.slice(0, idx), ...data.slice(idx + 1)];
+
+          writeFile(
+            JSON.stringify(data, null, 2),
+            () => {
+              res
+                .status(200)
+                .send(`Item ${item_id} removed from order ${req.params.id}`);
+            },
+            orderLinesPath
+          );
+        },
+        true,
+        orderLinesPath
+      );
+    } catch (err) {
+      console.log(err);
+    }
   });
 };
 

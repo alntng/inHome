@@ -1,21 +1,6 @@
 [
   {
     "order_id": 1,
-    "item_id": 3,
-    "qty": 3
-  },
-  {
-    "order_id": 1,
-    "item_id": 5,
-    "qty": 1
-  },
-  {
-    "order_id": 1,
-    "item_id": 7,
-    "qty": 2
-  },
-  {
-    "order_id": 1,
     "item_id": 16,
     "qty": 1
   },
@@ -272,11 +257,6 @@
   {
     "order_id": 8,
     "item_id": 12,
-    "qty": 2
-  },
-  {
-    "order_id": 8,
-    "item_id": 15,
     "qty": 2
   }
 ]
