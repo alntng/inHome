@@ -5,6 +5,7 @@ const itemRoutes = (app, fs) => {
 
   const { readFile, writeFile } = require("./utils");
 
+  //get all items
   app.get("/items", (req, res) => {
     readFile(
       (data) => {
@@ -15,6 +16,7 @@ const itemRoutes = (app, fs) => {
     );
   });
 
+  //Top 3 ordered items
   app.get("/items/top3", (req, res) => {
     readFile(
       (data) => {
@@ -30,16 +32,15 @@ const itemRoutes = (app, fs) => {
           }
         });
 
-        function getThreeLargestKeys(obj) {
+        const getThreeLargestKeys = (obj) => {
           let k1, k2, k3;
           let v1, v2, v3;
           v1 = v2 = v3 = -Infinity;
 
           // O(1)
-          var insertKey = function (key) {
-            var value = obj[key]; // note 1
+          let insertKey = function (key) {
+            let value = obj[key]; // note 1
 
-            // note 2
             if (value >= v1) {
               v3 = v2;
               v2 = v1;
@@ -60,12 +61,11 @@ const itemRoutes = (app, fs) => {
 
           // O(n)
           for (var key in obj) {
-            // note 3
             insertKey(key);
           }
 
           return [k1, k2, k3];
-        }
+        };
 
         const topThreeIds = getThreeLargestKeys(itemCount).map((key) =>
           Number(key)
