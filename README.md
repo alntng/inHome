@@ -32,7 +32,7 @@ Route: http://localhost:3001/orders<br/>
 Request: POST<br/>
 req.body:`{"user_id": num, "item_id": num, "qty": num }`<br/>
 
-_item_id_ and _qty_ are optional key/value pairs to include in the req.body when creating a new order. Whenever a new order is created, an entry is made into _orders.json_. If _item_id_ and _qty_ are included, respective entries will made written into _order_lines.json_<br/>
+_item_id_ and _qty_ are optional key/value pairs to include in the req.body when creating a new order. Whenever a new order is created, an entry is made into _orders.json_. If _item_id_ and _qty_ are included, respective entries will be written into _order_lines.json_<br/>
 
 **Modify an order item quantity**<br/>
 MODIFY ITEM QUANTITY:<br/>
