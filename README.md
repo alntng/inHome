@@ -1,6 +1,8 @@
 # Alan Tang's RESTful inHome API
 
-**Installation**
+**Installation**<br/>
+`git clone` the repo to your local machine
+
 After git cloning the repo, simply run `npm install` which should install the following NPM packages
 
 - Express
