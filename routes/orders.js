@@ -1,3 +1,5 @@
+const { readFile, writeFile } = require("./utils");
+
 const orderRoutes = (app, fs) => {
   const orderPath = "./data/orders.json";
   const orderLinesPath = "./data/order_lines.json";
@@ -6,27 +8,9 @@ const orderRoutes = (app, fs) => {
   const currentOrderLines = require("../data/order_lines.json");
   const currentCustomers = require("../data/customers.json");
 
+  const { readFile, writeFile } = require("./utils");
+
   let orderId = Math.max(...currentOrders.map((order) => order.id));
-
-  const readFile = (callback, returnJson = false, filePath) => {
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        throw err;
-      }
-
-      callback(JSON.parse(data));
-    });
-  };
-
-  const writeFile = (fileData, callback, filePath, encoding = "utf8") => {
-    fs.writeFile(filePath, fileData, encoding, (err) => {
-      if (err) {
-        throw err;
-      }
-
-      callback();
-    });
-  };
 
   //READ
   app.get("/orders", (req, res) => {
