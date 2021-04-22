@@ -1,16 +1,20 @@
 const customerRoutes = (app, fs) => {
-  // variables
   const dataPath = "./data/customers.json";
   const currentCustomers = require("../data/customers.json");
+
   const { readFile, writeFile } = require("./utils");
 
   let userId = Math.max(...currentCustomers.map((customer) => customer.id));
 
   // READ
   app.get("/customers", (req, res) => {
-    readFile((data) => {
-      res.send(data);
-    }, true);
+    readFile(
+      (data) => {
+        res.send(data);
+      },
+      true,
+      dataPath
+    );
   });
 
   //   CREATE;
