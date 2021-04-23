@@ -12,7 +12,7 @@
   {
     "order_id": 1,
     "item_id": 7,
-    "qty": 2
+    "qty": 1
   },
   {
     "order_id": 1,
@@ -67,7 +67,7 @@
   {
     "order_id": 3,
     "item_id": 8,
-    "qty": 4
+    "qty": 10
   },
   {
     "order_id": 3,

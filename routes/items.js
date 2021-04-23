@@ -37,9 +37,8 @@ const itemRoutes = (app, fs) => {
           let v1, v2, v3;
           v1 = v2 = v3 = -Infinity;
 
-          // O(1)
           let insertKey = function (key) {
-            let value = obj[key]; // note 1
+            let value = obj[key];
 
             if (value >= v1) {
               v3 = v2;
@@ -59,23 +58,30 @@ const itemRoutes = (app, fs) => {
             }
           };
 
-          // O(n)
           for (var key in obj) {
             insertKey(key);
           }
 
-          return [k1, k2, k3];
+          return [
+            [k1, v1],
+            [k2, v2],
+            [k3, v3],
+          ];
         };
 
-        const topThreeIds = getThreeLargestKeys(itemCount).map((key) =>
-          Number(key)
-        );
+        const topThreeIds = getThreeLargestKeys(itemCount);
 
         const filteredArray = itemList
           .filter((n) => {
-            return topThreeIds.indexOf(n.id) !== -1;
+            for (let i = 0; i < topThreeIds.length; i++) {
+              const curr = topThreeIds[i];
+              if (n.id === Number(curr[0])) {
+                n.qty = curr[1];
+                return n;
+              }
+            }
           })
-          .map((item) => item.name);
+          .sort((a, b) => b.qty - a.qty);
 
         res.status(200).send(filteredArray);
       },
