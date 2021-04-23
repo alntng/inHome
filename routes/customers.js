@@ -61,9 +61,7 @@ const customerRoutes = (app, fs) => {
             () => {
               res
                 .status(200)
-                .send(
-                  `users id:${req.params.id} updated from ${oldName} to ${req.body.name}`
-                );
+                .send(`Updated from ${oldName} to ${req.body.name}`);
             },
             dataPath
           );

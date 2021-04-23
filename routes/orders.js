@@ -40,7 +40,7 @@ const orderRoutes = (app, fs) => {
             writeFile(
               JSON.stringify(data, null, 2),
               () => {
-                res.status(200).send("new order added");
+                res.status(200).send(`Order ${orderId} created`);
               },
               orderPath
             );
@@ -65,7 +65,7 @@ const orderRoutes = (app, fs) => {
             writeFile(
               JSON.stringify(data, null, 2),
               () => {
-                res.status(200).send("new order lines added");
+                res.status(200).send(`Added item ${item_id} to ${orderId}`);
               },
               orderLinesPath
             );
@@ -97,7 +97,7 @@ const orderRoutes = (app, fs) => {
 
           data[idx] = { ...data[idx], qty };
           if (qty <= 0) {
-            data = [...data.slice(0, idx), ...data.slice(idx + 1)];
+            res.status(400).send("Can not have a negative quantity");
           }
 
           writeFile(
