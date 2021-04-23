@@ -28,6 +28,28 @@ const orderRoutes = (app, fs) => {
     try {
       orderId++;
 
+      //add to order_items if customer had an item in their cart
+      if (req.body.item_id && req.body.qty) {
+        readFile(
+          (data) => {
+            const { item_id, qty } = req.body;
+            let newOrderLine = { order_id: orderId, item_id, qty };
+            data.push(newOrderLine);
+            console.log(data, "newOrderline>>>>>>");
+
+            writeFile(
+              JSON.stringify(data, null, 2),
+              () => {
+                return;
+              },
+              orderLinesPath
+            );
+          },
+          true,
+          orderLinesPath
+        );
+      }
+
       //create new order
       readFile(
         (data) => {
@@ -52,28 +74,6 @@ const orderRoutes = (app, fs) => {
         true,
         orderPath
       );
-
-      //add to order_items if customer had an item in their cart
-      if (req.body.item_id && req.body.qty) {
-        readFile(
-          (data) => {
-            const { item_id, qty } = req.body;
-            let newOrderLine = { order_id: orderId, item_id, qty };
-
-            data.push(newOrderLine);
-
-            writeFile(
-              JSON.stringify(data, null, 2),
-              () => {
-                res.status(200).send(`Added item ${item_id} to ${orderId}`);
-              },
-              orderLinesPath
-            );
-          },
-          true,
-          orderLinesPath
-        );
-      }
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +103,11 @@ const orderRoutes = (app, fs) => {
           writeFile(
             JSON.stringify(data, null, 2),
             () => {
-              res.status(200).send(`Order ${req.params.id} updated`);
+              res
+                .status(200)
+                .send(
+                  `Order ${req.params.id} updated: \n You now have ${qty} of item ${item_id} in your cart`
+                );
             },
             orderLinesPath
           );
@@ -133,7 +137,8 @@ const orderRoutes = (app, fs) => {
               idx = i;
           });
 
-          data = [...data.slice(0, idx), ...data.slice(idx + 1)];
+          data[idx] = { ...data[idx], qty: 0 };
+          //   data = [...data.slice(0, idx), ...data.slice(idx + 1)];
 
           writeFile(
             JSON.stringify(data, null, 2),
