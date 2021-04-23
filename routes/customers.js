@@ -29,7 +29,9 @@ const customerRoutes = (app, fs) => {
           writeFile(
             JSON.stringify(data, null, 2),
             () => {
-              res.status(200).send(`Added new user: ${req.body.name}`);
+              res
+                .status(200)
+                .send(`Added new user: ${req.body.name}, ID# ${userId}`);
             },
             dataPath
           );

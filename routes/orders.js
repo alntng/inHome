@@ -35,7 +35,6 @@ const orderRoutes = (app, fs) => {
             const { item_id, qty } = req.body;
             let newOrderLine = { order_id: orderId, item_id, qty };
             data.push(newOrderLine);
-            console.log(data, "newOrderline>>>>>>");
 
             writeFile(
               JSON.stringify(data, null, 2),
