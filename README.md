@@ -52,4 +52,10 @@ Route: http://localhost:3001/items/top3<br/>
 Request: GET<br/>
 req.body: `N/A`<br/>
 
-I like how in my solution for the recommendation, along with all of the routes, the database (.json) files are read, that way we know we are always handling the latest information in our database. One con of my approach however is that whenever the '/top3' route is hit, it is re-reading our entire database, re-calculating the top 3 most ordered items. As more and more orders are placed, the time to process all of this will grow exponentially. To improve on this, I would implement a cache to prevent duplicate calculations. The cache will keep a count of all items and the number of times they were ordered. Each time a new order is placed, the cache will be updated incrementing or decrementing the itemId's order count.
+One pro of my solution is that the route for recommendation, along with all of my other routes, the database (.json) files are read when the route is hit ensuring that we are handling the latest information from our database. At the same time though, this is partially a con because while the data might be up to date, as more orders are placed, re-reading the database each time the route is hit can become more resource intensive. To improve on this, I would implement a cache to prevent the constant re-reads. The cache will keep a count of all items that were ordered, and each time a new order is placed, the cache will increment or decrement the item Item_id’s order count respectively.
+
+One other con is that it only received the top 3 items. If given more time, I would refactor the function to be able to return a dynamic amount of the most popular items.
+
+## Change Recommendation Solution to incorporate a customer's past order history<br/>
+
+To incorporate a a customer’s order history, I would add a separate middleware function that would filter out the order_lines.json for only orders that are linked to the customer id. I would grab the customer id from from either a piece of state, local storage, cookie etc, depending on how the app is built.
