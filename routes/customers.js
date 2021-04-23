@@ -29,7 +29,7 @@ const customerRoutes = (app, fs) => {
           writeFile(
             JSON.stringify(data, null, 2),
             () => {
-              res.status(200).send("new user added");
+              res.status(200).send(`Added new user: ${req.body.name}`);
             },
             dataPath
           );
@@ -52,12 +52,18 @@ const customerRoutes = (app, fs) => {
             if (customer.id === Number(req.params.id)) idx = i;
           });
 
+          const oldName = data[idx].name;
+
           data[idx].name = req.body.name;
 
           writeFile(
             JSON.stringify(data, null, 2),
             () => {
-              res.status(200).send(`users id:${req.params.id} updated`);
+              res
+                .status(200)
+                .send(
+                  `users id:${req.params.id} updated from ${oldName} to ${req.body.name}`
+                );
             },
             dataPath
           );
