@@ -138,7 +138,6 @@ const orderRoutes = (app, fs) => {
           });
 
           data[idx] = { ...data[idx], qty: 0 };
-          //   data = [...data.slice(0, idx), ...data.slice(idx + 1)];
 
           writeFile(
             JSON.stringify(data, null, 2),

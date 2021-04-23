@@ -39,13 +39,12 @@ MODIFY ITEM QUANTITY:<br/>
 Route: http://localhost:3001/orders/:id<br/>
 Request: PUT<br/>
 req.body: `{"item_id": num, "qty": num}`<br/>
-_if the updated qty is 0, the order_line will be deleted from order_lines.json_<br/>
 
 DELETING ITEM FROM ORDER:<br/>
 Route: http://localhost:3001/orders/:id<br/>
 Request: DELETE<br/>
 req.body: `N/A`<br/>
-_Separate delete route if the customer decided to purge multiple quantities of an item all at once_<br/>
+_When a customer deletes or sets the quantity of an item to 0, the respective entry in order_lines.json will reflect the updated value of 0 instead of removing the entry from the array acting as a “soft delete” so if in the future the customer decides to re-add the item, the entry can be updated once again, as well as keeping the data line for possible marketing /research purposes. ie: If a certain Item_id has many 0 qty’s in order_lines indicating that many customers are changing their mind about purchasing that item._<br/>
 
 ## Recommendation Endpoint<br/>
 
@@ -53,4 +52,4 @@ Route: http://localhost:3001/items/top3<br/>
 Request: GET<br/>
 req.body: `N/A`<br/>
 
-I like how in my solution for the recommendation, along with all of the routes, the database (.json) files are read, that way we know we are always handling the latest information in our database. One con of my approach however is that whenever the '/top3' route is hit, it is re-reading our entire database, re-calculating the top 3 most ordered items. As more and more orders are placed, the time to process all of this will grow exponentially. To improve on this, I would implement a cache of some sort to prevent duplicate calculations.
+I like how in my solution for the recommendation, along with all of the routes, the database (.json) files are read, that way we know we are always handling the latest information in our database. One con of my approach however is that whenever the '/top3' route is hit, it is re-reading our entire database, re-calculating the top 3 most ordered items. As more and more orders are placed, the time to process all of this will grow exponentially. To improve on this, I would implement a cache to prevent duplicate calculations. The cache will keep a count of all items and the number of times they were ordered. Each time a new order is placed, the cache will be updated incrementing or decrementing the itemId's order count.
