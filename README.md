@@ -53,4 +53,4 @@ Route: http://localhost:3001/items/top3<br/>
 Request: GET<br/>
 req.body: `N/A`<br/>
 
-I like how in my solution for the recommendation, along with all of the routes, the database (.json) files are read, that way we know we are always handling the latest information in our database. One con of my approach however is that whenever the '/top3' route is hit, it is re-reading our entire database, re-calculating the top 3 most ordered items. As more and more orders are placed, the time to process all of this will grow exponentially. To improve on this, I would implement a cache or some sort to prevent duplicate calculations.
+I like how in my solution for the recommendation, along with all of the routes, the database (.json) files are read, that way we know we are always handling the latest information in our database. One con of my approach however is that whenever the '/top3' route is hit, it is re-reading our entire database, re-calculating the top 3 most ordered items. As more and more orders are placed, the time to process all of this will grow exponentially. To improve on this, I would implement a cache of some sort to prevent duplicate calculations.

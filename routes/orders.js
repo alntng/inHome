@@ -14,9 +14,13 @@ const orderRoutes = (app, fs) => {
 
   //READ
   app.get("/orders", (req, res) => {
-    readFile((data) => {
-      res.send(data);
-    }, true);
+    readFile(
+      (data) => {
+        res.send(data);
+      },
+      true,
+      orderPath
+    );
   });
 
   //CREATE NEW ORDER
